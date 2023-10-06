@@ -1,4 +1,4 @@
-"use client"
+//"use client"
 import Navbar from "@/components/nav/Navbar"
 import "./globals.css";
 export const metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body>
+        <body className="bg-gray-50">
           <Navbar />
           {children}
         </body>
