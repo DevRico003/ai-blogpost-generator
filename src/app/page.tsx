@@ -1,21 +1,54 @@
 "use client"
-import Link from 'next/link'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import Link from "next/link"
+import { useUser } from "@auth0/nextjs-auth0/client"
 
+// Hauptkomponente für die Seite
 export default function Page() {
+  // Benutze den "useUser" Hook von auth0, 
+  // um Informationen über den aktuellen Benutzer zu erhalten
   const { user, error, isLoading } = useUser()
+
   return (
-    <main>
-      <h1>Hello World</h1>
-      {user && <p>The user {user?.name} is logged in.</p>}
+    <section className="w-full flex flex-col">
       {user ? (
-      <a href="api/auth/logout">Logout</a>
+        // Wenn der Benutzer eingeloggt ist, 
+        // zeige eine Begrüßung und einen Button zum Starten
+        <div className="flex flex-col items-center justify-center gap-4">
+          <h1 className="mt-4 text-4xl font-bold text-center text-indigo-600">
+            Hi, {user?.nickname || user?.name || "dear user"}!
+          </h1>
+          <h2 className="text-xl max-w-lg text-center text-gray-600">
+            Welcome to Bloggify, where you can easily create full blog 
+            posts with just one click!
+          </h2>
+          <Link
+            href="/new"
+            className="bg-indigo-600 text-white px-4 py-2 
+            rounded-md hover:bg-indigo-500 transition-all cursor-pointer"
+          >
+            Get Started
+          </Link>
+        </div>
       ) : (
-      <a href="api/auth/login">Login</a>
+        // Wenn der Benutzer nicht eingeloggt ist, 
+        // zeige eine allgemeine Begrüßung und einen Login-Button
+        <div className="flex flex-col items-center justify-center gap-4">
+          <h1 className="mt-4 text-4xl font-bold text-center text-indigo-600">
+            Hello!
+          </h1>
+          <h2 className="text-xl max-w-lg text-center text-gray-600">
+            Welcome to Bloggify, where you can easily create full blog 
+            posts with just one click!
+          </h2>
+          <a
+            href="/api/auth/login"
+            className="bg-indigo-600 text-white px-4 py-2 rounded-md 
+            hover:bg-indigo-500 transition-all cursor-pointer"
+          >
+            Login to get started
+          </a>
+        </div>
       )}
-      <div>
-        <Link href="/user">Go to /user</Link>
-      </div>
-    </main>
+    </section>
   )
 }
